@@ -26,7 +26,7 @@ public class UserController {
         User user = userService.findUserByUsername(principal.getName());
         model.addAttribute("user", userService.getUser(user.getId()));
         System.out.println("Успешно: user id" + user.getClass());
-        model.addAttribute("titleTable", "Страница пользователя: ");
+        model.addAttribute("tableTitle", "Страница пользователя: ");
         return "user";
 
     }
