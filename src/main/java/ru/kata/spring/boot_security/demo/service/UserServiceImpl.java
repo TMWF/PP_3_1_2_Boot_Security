@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
@@ -54,15 +54,4 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User findUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("Пользователь не найден!");
-        }
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(), user.getPassword(), user.getAuthorities());
-    }
-
 }
