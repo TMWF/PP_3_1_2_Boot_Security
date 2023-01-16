@@ -34,8 +34,8 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
 
         // пользователи Admin  и User
-        User userAdmin = new User("Leo", "Bonhart", "lb@mail.ru", "$2a$12$BzgYbgmoIXM73n14QVilw.XdNlHn0XrOjktbLbzXQGmxgKQbXHL9e", adminRoles);
-        User userUser = new User("Joe", "Louis", "joelouis@mail.ru", "$2a$12$BzgYbgmoIXM73n14QVilw.XdNlHn0XrOjktbLbzXQGmxgKQbXHL9e", userRoles);
+        User userAdmin = new User("Leo", "Bonhart", "lb@mail.ru", 35, "$2a$12$BzgYbgmoIXM73n14QVilw.XdNlHn0XrOjktbLbzXQGmxgKQbXHL9e", adminRoles);
+        User userUser = new User("Joe", "Louis", "joelouis@mail.ru", 30, "$2a$12$BzgYbgmoIXM73n14QVilw.XdNlHn0XrOjktbLbzXQGmxgKQbXHL9e", userRoles);
         System.out.println(userAdmin);
         userRepository.save(userAdmin);
         System.out.println(userUser);

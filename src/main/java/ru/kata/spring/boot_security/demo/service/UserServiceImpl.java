@@ -2,10 +2,8 @@ package ru.kata.spring.boot_security.demo.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -16,11 +14,13 @@ import java.util.List;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
+    private  final PasswordEncoder passwordEncoder;
 
     private final UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+        this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
     }
 
@@ -44,6 +44,16 @@ public class UserServiceImpl implements UserService {
     public void updateUser(User user) {
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userRepository.save(user);
+    }
+
+    @Override
+    public void update(Long id, User updatedUser) {
+        updatedUser.setId(id);
+        updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+//        if (updatedUser.getRoles().contains(roleRepositories.findRoleByRole("ROLE_ADMIN"))) {
+//            updatedUser.getRoleList().add(roleRepositories.findRoleByRole("ROLE_USER"));
+//        }
+        userRepository.save(updatedUser);
     }
 
 

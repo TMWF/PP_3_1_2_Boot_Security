@@ -15,9 +15,9 @@
 
     <nav class="navbar sticky-top bg-dark text-white">
         <span class="navbar-brand mb-0">
-            <span style="font-weight: bold" th:text="${currentUser.getEmail()}"></span> with roles:
-            <span th:each="role : ${currentUser.getRoleList()}">
-                <span th:text="${role.getRole().replace('ROLE_', '')}"></span>
+            <span style="font-weight: bold" th:text="${currentUser.getUsername()}"></span> with roles:
+            <span th:each="role : ${currentUser.getRoles()}">
+                <span th:text="${role.getName().replace('ROLE_', '')}"></span>
             </span>
         </span>
         <a href="/logout" class="btn text-white-50" role="button" aria-pressed="true">Logout</a>
@@ -74,10 +74,10 @@
                                             <tbody>
                                                 <tr th:each="user : ${users}">
                                                     <th scope="row" th:text="${user.getId()}">ID</th>
-                                                    <td class="pt-3" th:text="${user.getFirstName()}">First Name</td>
-                                                    <td class="pt-3" th:text="${user.getLastName()}">Last Name</td>
+                                                    <td class="pt-3" th:text="${user.getName()}">First Name</td>
+                                                    <td class="pt-3" th:text="${user.getLast_name()}">Last Name</td>
                                                     <td class="pt-3" th:text="${user.getAge()}">Age</td>
-                                                    <td class="pt-3" th:text="${user.getEmail()}">Email</td>
+                                                    <td class="pt-3" th:text="${user.getUsername()}">Email</td>
                                                     <td class="pt-3" th:text="${user.getRole()}">Role</td>
                                                     <td>
                                                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#edit" th:data-target="${'#edit'+user.getId()}">
@@ -109,13 +109,13 @@
                                                                             </div>
 
                                                                             <label for="Edit_first_name" class="form-label text-center pt-3 h6"><b>First name</b></label>
-                                                                            <input type="text" th:name = "firstName" th:value="${user.firstName}" class="form-control" id="Edit_first_name" placeholder="First name" aria-describedby="basic-addon1" required>
+                                                                            <input type="text" th:name = "firstName" th:value="${user.name}" class="form-control" id="Edit_first_name" placeholder="First name" aria-describedby="basic-addon1" required>
                                                                             <div class="valid-feedback">
                                                                                 Looks good!
                                                                             </div>
 
                                                                             <label for="Edit_last_name" class="form-label text-center pt-3 h6"><b>Last name</b></label>
-                                                                            <input type="text" th:name = "lastName" th:value="${user.lastName}" class="form-control" id="Edit_last_name" placeholder="Last name" aria-describedby="basic-addon1" required>
+                                                                            <input type="text" th:name = "lastName" th:value="${user.last_name}" class="form-control" id="Edit_last_name" placeholder="Last name" aria-describedby="basic-addon1" required>
                                                                             <div class="valid-feedback">
                                                                                 Looks good!
                                                                             </div>
@@ -127,7 +127,7 @@
                                                                             </div>
 
                                                                             <label for="Edit_email" class="form-label text-center pt-3 h6"><b>Email name</b></label>
-                                                                            <input type="email" th:name = "email" th:value="${user.email}" class="form-control" id="Edit_email" placeholder="Email" aria-describedby="basic-addon1" required>
+                                                                            <input type="email" th:name = "email" th:value="${user.username}" class="form-control" id="Edit_email" placeholder="Email" aria-describedby="basic-addon1" required>
                                                                             <div class="valid-feedback">
                                                                                 Looks good!
                                                                             </div>
@@ -139,11 +139,11 @@
                                                                             </div>
 
                                                                             <label for="Edit_rolesId" class="form-label text-center pt-3 h6"><b>Role</b></label>
-                                                                            <select size="2" th:name = "roleList" th:value="${user.roleList}" multiple
+                                                                            <select size="2" th:name = "roleList" th:value="${user.roles}" multiple
                                                                                     class="form-control"
                                                                                     id="Edit_rolesId" name="listRoles" required>
                                                                                 <option th:each="oneRole : ${roles}"
-                                                                                        th:text="${oneRole.getRole().substring(5)}"
+                                                                                        th:text="${oneRole.getName().substring(5)}"
                                                                                         th:value="${oneRole.getId()}">Role
                                                                                 </option>
                                                                             </select>
@@ -174,11 +174,11 @@
                                                                             <input type="text" th:value="${user.id}" class="form-control" id="Edit_id1" placeholder="ID" aria-describedby="basic-addon1" disabled>
 
                                                                             <label for="Edit_first_name1" class="form-label text-center pt-3 h6"><b>First name</b></label>
-                                                                            <input type="text" th:value="${user.firstName}"  class="form-control" id="Edit_first_name1" placeholder="First name" aria-describedby="basic-addon1" disabled>
+                                                                            <input type="text" th:value="${user.name}"  class="form-control" id="Edit_first_name1" placeholder="First name" aria-describedby="basic-addon1" disabled>
 
 
                                                                             <label for="Edit_last_name1" class="form-label text-center pt-3 h6"><b>Last name</b></label>
-                                                                            <input type="text" th:value="${user.lastName}" class="form-control" id="Edit_last_name1" placeholder="Last name" aria-describedby="basic-addon1" disabled>
+                                                                            <input type="text" th:value="${user.last_name}" class="form-control" id="Edit_last_name1" placeholder="Last name" aria-describedby="basic-addon1" disabled>
 
 
                                                                             <label for="Edit_age1" class="form-label text-center pt-3 h6"><b>Age name</b></label>
@@ -186,14 +186,14 @@
 
 
                                                                             <label for="Edit_email1" class="form-label text-center pt-3 h6"><b>Email name</b></label>
-                                                                            <input type="email" th:value="${user.email}" class="form-control" id="Edit_email1" placeholder="Email" aria-describedby="basic-addon1" disabled>
+                                                                            <input type="email" th:value="${user.username}" class="form-control" id="Edit_email1" placeholder="Email" aria-describedby="basic-addon1" disabled>
 
                                                                             <label for="Edit_rolesId1" class="form-label text-center pt-3 h6"><b>Role</b></label>
-                                                                            <select size="2" th:value="${user.roleList}" multiple
+                                                                            <select size="2" th:value="${user.roles}" multiple
                                                                                     class="form-control"
                                                                                     id="Edit_rolesId1" name="listRoles" required disabled>
                                                                                 <option th:each="oneRole : ${roles}"
-                                                                                        th:text="${oneRole.getRole().substring(5)}"
+                                                                                        th:text="${oneRole.getName().substring(5)}"
                                                                                         th:value="${oneRole.getId()}">Role
                                                                                 </option>
                                                                             </select>
@@ -222,13 +222,13 @@
                                                 <div class="d-flex flex-column align-items-center w-25 mx-auto">
 
                                                     <label for="first_name" class="form-label text-center h5"><b>First name</b></label>
-                                                    <input type="text" th:field="*{firstName}" class="form-control" id="first_name" placeholder="First name" aria-describedby="basic-addon1" required>
+                                                    <input type="text" th:field="*{name}" class="form-control" id="first_name" placeholder="First name" aria-describedby="basic-addon1" required>
                                                     <div class="valid-feedback">
                                                         Looks good!
                                                     </div>
 
                                                     <label for="last_name" class="form-label text-center pt-2 h5"><b>Last name</b></label>
-                                                    <input type="text" th:field="*{lastName}" class="form-control" id="last_name" placeholder="Last name" aria-describedby="basic-addon1" required>
+                                                    <input type="text" th:field="*{last_name}" class="form-control" id="last_name" placeholder="Last name" aria-describedby="basic-addon1" required>
                                                     <div class="valid-feedback">
                                                         Looks good!
                                                     </div>
@@ -240,7 +240,7 @@
                                                     </div>
 
                                                     <label for="email" class="form-label text-center pt-2 h5"><b>Email name</b></label>
-                                                    <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="Email" aria-describedby="basic-addon1" required>
+                                                    <input type="email" th:field="*{username}" class="form-control" id="email" placeholder="Email" aria-describedby="basic-addon1" required>
                                                     <div class="valid-feedback">
                                                         Looks good!
                                                     </div>
@@ -252,11 +252,11 @@
                                                     </div>
 
                                                     <label for="rolesId" class="form-label text-center pt-2 h5"><b>Role</b></label>
-                                                    <select size="2" th:field="*{roleList}" multiple
+                                                    <select size="2" th:field="*{roles}" multiple
                                                             class="form-control"
                                                             id="rolesId" name="listRoles" required>
                                                         <option th:each="oneRole : ${roles}"
-                                                                th:text="${oneRole.getRole().substring(5)}"
+                                                                th:text="${oneRole.getName().substring(5)}"
                                                                 th:value="${oneRole.getId()}">Role
                                                         </option>
                                                     </select>

@@ -14,9 +14,9 @@
 <body>
     <nav class="navbar sticky-top bg-dark text-white">
             <span class="navbar-brand mb-0">
-                <span style="font-weight: bold" th:text="${currentUser.getEmail()}"></span> with roles:
-                <span th:each="role : ${currentUser.getRoleList()}">
-                    <span th:text="${role.getRole().replace('ROLE_', '')}"></span>
+                <span style="font-weight: bold" th:text="${currentUser.getUsername()}"></span> with roles:
+                <span th:each="role : ${currentUser.getRoles()}">
+                    <span th:text="${role.getName().replace('ROLE_', '')}"></span>
                 </span>
             </span>
         <a href="/logout" class="btn text-white-50" role="button" aria-pressed="true">Logout</a>
@@ -64,10 +64,10 @@
                                         <tbody>
                                         <tr>
                                             <th scope="row" th:text="${currentUser.getId()}">ID</th>
-                                            <td class="pt-3" th:text="${currentUser.getFirstName()}">First Name</td>
-                                            <td class="pt-3" th:text="${currentUser.getLastName()}">Last Name</td>
+                                            <td class="pt-3" th:text="${currentUser.getName()}">First Name</td>
+                                            <td class="pt-3" th:text="${currentUser.getLast_name()}">Last Name</td>
                                             <td class="pt-3" th:text="${currentUser.getAge()}">Age</td>
-                                            <td class="pt-3" th:text="${currentUser.getEmail()}">Email</td>
+                                            <td class="pt-3" th:text="${currentUser.getUsername()}">Email</td>
                                             <td class="pt-3" th:text="${currentUser.getRole()}">Role</td>
                                         </tr>
                                         </tbody>
