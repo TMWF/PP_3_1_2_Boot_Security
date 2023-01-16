@@ -6,28 +6,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 
 @Controller
 public class Controllers {
 
-    private final RoleService roleService;
     private final UserService userService;
 
     @Autowired
-    public Controllers(RoleService roleService, UserService userService) {
-        this.roleService = roleService;
+    public Controllers(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping("admin/users")
-    public String showAllUsers(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("users", userService.getAllUsers());
+    public String showAllUser(@AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("users", userService.findAll());
         model.addAttribute("currentUser", user);
         model.addAttribute("newUser", new User());
-        model.addAttribute("roles", roleService.getAllRoles());
+        model.addAttribute("roles", userService.getRole());
         return "showAllUsers";
     }
 
@@ -39,19 +36,18 @@ public class Controllers {
 
     @PostMapping("admin/new")
     public String createUser(@ModelAttribute User user) {
-        userService.createNewUser(user);
+        userService.saveUser(user);
         return "redirect:/admin/users";
     }
 
     @PatchMapping("/admin/user/edit/{id}")
-    public String updateUser(@PathVariable Long id, @ModelAttribute("user") User user) {
-        System.out.println(user);
+    public String updateUser(@PathVariable int id, @ModelAttribute("user") User user) {
         userService.update(id, user);
         return "redirect:/admin/users";
     }
 
     @DeleteMapping("/admin/user/{id}")
-    public String deleteUser(@PathVariable("id") Long id) {
+    public String deleteUser(@PathVariable("id") int id) {
         userService.deleteUser(id);
         return "redirect:/admin/users";
     }
